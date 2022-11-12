@@ -69,6 +69,8 @@ public class DbShopAgent {
             return getType1Query(object);
         } else if(getRequestType(object) == 2){
             return getType2Query(object);
+        } else if(getRequestType(object) == 3){
+            return getType3Query(object);
         }
 
         return null;
@@ -80,11 +82,17 @@ public class DbShopAgent {
     public static String getType2Query(JSONObject object){
         return "SELECT lastname, name FROM customers WHERE id IN (SELECT customerid FROM (SELECT COUNT(customerid) " +
                 "As COUNT, customerid FROM orders WHERE productid =(SELECT id FROM products WHERE " +
-                "name = \'" + object.get("productName") + "\') GROUP BY customerid) AS FOO WHERE " +
+                "name = \'" + object.get("productName") + "\') GROUP BY customerid) AS SUB WHERE " +
                 "COUNT > " + object.get("minTimes") + ");";
     }
 
-//    public static String getType3Query()
+    public static String getType3Query(JSONObject object){
+        return "SELECT lastname, name FROM customers WHERE id IN(\n" +
+                "SELECT sub.customerid FROM (SELECT customerid, productid, priсe  FROM" +
+                " orders JOIN products p on orders.productid = p.id\n" +
+                "WHERE customerid IN (SELECT id FROM customers)) AS SUB group by sub.customerid " +
+                "HAVING SUM(sub.priсe) BETWEEN "+ object.get("minExpenses") + " AND " + object.get("maxExpenses") +");";
+    }
 
 
 
