@@ -2,18 +2,21 @@ package org.example.DB;
 import org.example.entities.Customer;
 import org.example.entities.Order;
 import org.example.entities.Product;
+import org.json.JSONObject;
 
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 public class DbShopAgent {
     private String url;
     private String name;
     private String password;
     private Connection connection;
-    LinkedList<Customer> customersList;
-    LinkedList<Product> productsList;
-    LinkedList<Order> ordersList;
+    private LinkedList<Customer> customersList;
+    private LinkedList<Product> productsList;
+    private LinkedList<Order> ordersList;
 
     public DbShopAgent(String url, String name, String password) {
         this.url = url;
@@ -47,5 +50,30 @@ public class DbShopAgent {
     private String cutString(String str){
        return str.substring(0, str.indexOf(" "));
     }
+
+    public static int getRequestType(JSONObject object){
+        Map<String, Object> map = object.toMap();
+        Set<String> set = map.keySet();
+        if(set.size() == 1){
+            if(set.contains("lastName")){
+                return 1;
+            }else{
+                return 4;
+            }
+        } else if(set.contains("productName")) {
+            return 2;
+        }else {
+            return 3;
+        }
+    }
+
+    public int executeQuery(JSONObject object){
+        return getRequestType(object);
+    }
+    private String getQueryFromJson(JSONObject object){
+        return null;
+    }
+
+
 
 }
