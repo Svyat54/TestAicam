@@ -22,8 +22,10 @@ public class Main {
 
         LinkedList<JSONObject> list = Reader.getCriterias("input.json");
         for(int i = 0; i < list.size(); i++) {
-//            System.out.println(DbShopAgent.getRequestType(list.get(i)));
-            System.out.println(agent.executeQuery(list.get(i)));
+////            System.out.println(DbShopAgent.getRequestType(list.get(i)));
+//            System.out.println(agent.executeQuery(list.get(i)));
+            System.out.println(agent.getCustomersList(list.get(i)));
         }
+
     }
 }

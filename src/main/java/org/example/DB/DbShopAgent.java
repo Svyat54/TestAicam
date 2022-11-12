@@ -1,7 +1,5 @@
 package org.example.DB;
 import org.example.entities.Customer;
-import org.example.entities.Order;
-import org.example.entities.Product;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -14,9 +12,8 @@ public class DbShopAgent {
     private String name;
     private String password;
     private Connection connection;
-    private LinkedList<Customer> customersList;
-    private LinkedList<Product> productsList;
-    private LinkedList<Order> ordersList;
+//    private LinkedList<Product> productsList;
+//    private LinkedList<Order> ordersList;
 
     public DbShopAgent(String url, String name, String password) {
         this.url = url;
@@ -29,9 +26,9 @@ public class DbShopAgent {
         }
     }
 
-    public LinkedList<Customer> getCustomersList(){
-        customersList = new LinkedList<>();
-        String query = "SELECT name, lastname FROM customers;";
+    public LinkedList<Customer> getCustomersList(JSONObject object){
+        LinkedList<Customer> customersList = new LinkedList<>();
+        String query = getQueryFromJson(object);
         try{
             Statement statement = this.connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -67,12 +64,27 @@ public class DbShopAgent {
         }
     }
 
-    public int executeQuery(JSONObject object){
-        return getRequestType(object);
-    }
     private String getQueryFromJson(JSONObject object){
+        if(getRequestType(object) == 1){
+            return getType1Query(object);
+        } else if(getRequestType(object) == 2){
+            return getType2Query(object);
+        }
+
         return null;
     }
+    public static String getType1Query(JSONObject object){
+        return "SELECT lastname, name FROM customers WHERE lastname = " + "'" +object.get("lastName") +"';";
+    }
+
+    public static String getType2Query(JSONObject object){
+        return "SELECT lastname, name FROM customers WHERE id IN (SELECT customerid FROM (SELECT COUNT(customerid) " +
+                "As COUNT, customerid FROM orders WHERE productid =(SELECT id FROM products WHERE " +
+                "name = \'" + object.get("productName") + "\') GROUP BY customerid) AS FOO WHERE " +
+                "COUNT > " + object.get("minTimes") + ");";
+    }
+
+//    public static String getType3Query()
 
 
 
