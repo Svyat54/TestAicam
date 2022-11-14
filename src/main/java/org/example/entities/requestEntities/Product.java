@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.entities.requestEntities;
 
 public class Product {
     private String name;

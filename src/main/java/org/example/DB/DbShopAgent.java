@@ -1,12 +1,8 @@
 package org.example.DB;
-import org.example.entities.Customer;
+import org.example.entities.requestEntities.Customer;
 import org.example.entities.responseEntities.Record;
-import org.example.entities.responseEntities.ResponseJsonObject;
 import org.json.JSONObject;
-
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
@@ -16,8 +12,6 @@ public class DbShopAgent {
     private String name;
     private String password;
     private Connection connection;
-//    private LinkedList<Product> productsList;
-//    private LinkedList<Order> ordersList;
 
     public DbShopAgent(String url, String name, String password) {
         this.url = url;
@@ -133,18 +127,5 @@ public class DbShopAgent {
                 "JOIN products p on sub.productid = p.id JOIN customers c on sub.customerid = c.id\n" +
                 "group by p.name, p.priсe, sub.customerid, c.name, c.lastname, sub.productid ORDER BY expenses DESC;";
     }
-
-//    public static String createJsonObject(JSONObject object){
-//        ResponseJsonObject jsonObject = new ResponseJsonObject();
-//        LocalDate startDate = LocalDate.parse(object.getString("startDate"));
-//        LocalDate endDate = LocalDate.parse(object.getString("endDate"));
-//        Period period = Period.between(startDate, endDate);
-//        Integer diff = Math.abs(period.getDays() + 1);
-//        jsonObject.setType("stat");
-//        jsonObject.setTotalDays(diff);
-////        jsonObject.setTotalExpenses("SELECT SUM(expenses) AS totalExpenses, FullName FROM salesStat group by FullName ORDER BY totalExpenses DESC;");
-////        jsonObject.setAvgExpenses();
-//        return null;
-//    }
 
 }
