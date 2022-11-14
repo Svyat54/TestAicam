@@ -1,8 +1,12 @@
 package org.example.DB;
 import org.example.entities.Customer;
+import org.example.entities.responseEntities.Record;
+import org.example.entities.responseEntities.ResponseJsonObject;
 import org.json.JSONObject;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
@@ -44,8 +48,28 @@ public class DbShopAgent {
         return customersList;
     }
 
+    public LinkedList<Record> getRecordsList(JSONObject object){
+        LinkedList<Record> recordsList = new LinkedList<>();
+        String query = getStatQuery(object);
+        try{
+            Statement statement = this.connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                String fullName = cutString(resultSet.getString("fullname"));
+                String productName = cutString(resultSet.getString("productname"));
+                Integer expenses = Integer.valueOf((resultSet.getString("expenses")));
+                recordsList.add(new Record(fullName, productName, expenses));
+            }
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return recordsList;
+    }
+
     private String cutString(String str){
-       return str.substring(0, str.indexOf(" "));
+        if(!str.contains("   ")) return str;
+        else return str.substring(0, str.indexOf("  "));
     }
 
     public static int getRequestType(JSONObject object){
@@ -71,10 +95,12 @@ public class DbShopAgent {
             return getType2Query(object);
         } else if(getRequestType(object) == 3){
             return getType3Query(object);
+        } else if(getRequestType(object) == 4){
+            return getType4Query(object);
         }
-
-        return null;
+        return getStatQuery(object);
     }
+
     public static String getType1Query(JSONObject object){
         return "SELECT lastname, name FROM customers WHERE lastname = " + "'" +object.get("lastName") +"';";
     }
@@ -94,6 +120,31 @@ public class DbShopAgent {
                 "HAVING SUM(sub.priсe) BETWEEN "+ object.get("minExpenses") + " AND " + object.get("maxExpenses") +");";
     }
 
+    public static String getType4Query(JSONObject object){
+        return "SELECT lastname, name FROM customers WHERE id IN(\n" +
+                "SELECT customerid FROM orders group by customerid " +
+                "ORDER BY COUNT(customerid) limit " + object.get("badCustomers") + ");";
+    }
 
+    public static String getStatQuery(JSONObject object){
+        return "SELECT c.lastname || ' ' || c.name as FullName, p.name as productName, COUNT(sub.productid) * p.priсe as expenses FROM\n" +
+                "(SELECT * FROM orders WHERE orderdate BETWEEN '" + object.getString("startDate") + "' AND '" +
+                "" + object.getString("endDate")+ "' AND customerid in (SELECT id FROM customers) order by productid) as sub\n" +
+                "JOIN products p on sub.productid = p.id JOIN customers c on sub.customerid = c.id\n" +
+                "group by p.name, p.priсe, sub.customerid, c.name, c.lastname, sub.productid ORDER BY expenses DESC;";
+    }
+
+//    public static String createJsonObject(JSONObject object){
+//        ResponseJsonObject jsonObject = new ResponseJsonObject();
+//        LocalDate startDate = LocalDate.parse(object.getString("startDate"));
+//        LocalDate endDate = LocalDate.parse(object.getString("endDate"));
+//        Period period = Period.between(startDate, endDate);
+//        Integer diff = Math.abs(period.getDays() + 1);
+//        jsonObject.setType("stat");
+//        jsonObject.setTotalDays(diff);
+////        jsonObject.setTotalExpenses("SELECT SUM(expenses) AS totalExpenses, FullName FROM salesStat group by FullName ORDER BY totalExpenses DESC;");
+////        jsonObject.setAvgExpenses();
+//        return null;
+//    }
 
 }

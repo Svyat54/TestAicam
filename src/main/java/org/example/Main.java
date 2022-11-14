@@ -1,13 +1,15 @@
 package org.example;
 
 import org.example.DB.DbShopAgent;
+import org.example.entities.responseEntities.Record;
+import org.example.entities.responseEntities.StatQueryParser;
 import org.example.utilities.Reader;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
 
 
 public class Main {
@@ -18,14 +20,17 @@ public class Main {
         String password = "rootroot1";
 
         DbShopAgent agent = new DbShopAgent(url, name, password);
+            //Первый запрос
+//        LinkedList<JSONObject> list = Reader.getJsonFromFile("input.json");
+//        for(int i = 0; i < list.size(); i++) {
+//            System.out.println(agent.getCustomersList(list.get(i)));
+//        }
 
+        LinkedList<JSONObject> list = Reader.getJsonFromFile("input1.json");
+        LinkedList<Record> allRecordsByPeriod = agent.getRecordsList(list.get(0));
+        LinkedList<LinkedList<Record>> recordsList = StatQueryParser.getListOfRecordsByFullName(allRecordsByPeriod);
+        System.out.println(recordsList);
 
-        LinkedList<JSONObject> list = Reader.getCriterias("input.json");
-        for(int i = 0; i < list.size(); i++) {
-////            System.out.println(DbShopAgent.getRequestType(list.get(i)));
-//            System.out.println(agent.executeQuery(list.get(i)));
-            System.out.println(agent.getCustomersList(list.get(i)));
-        }
 
     }
 }
