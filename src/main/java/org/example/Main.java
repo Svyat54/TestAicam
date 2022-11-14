@@ -29,7 +29,9 @@ public class Main {
         LinkedList<JSONObject> list = Reader.getJsonFromFile("input1.json");
         LinkedList<Record> allRecordsByPeriod = agent.getRecordsList(list.get(0));
         LinkedList<LinkedList<Record>> recordsList = StatQueryParser.getListOfRecordsByFullName(allRecordsByPeriod);
-        System.out.println(recordsList);
+        for(LinkedList<Record> listOfRecordsByPerson : recordsList) {
+            System.out.println(listOfRecordsByPerson);
+        }
 
 
     }

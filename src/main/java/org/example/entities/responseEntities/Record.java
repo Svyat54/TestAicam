@@ -1,5 +1,6 @@
 package org.example.entities.responseEntities;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public class Record {
@@ -24,6 +25,19 @@ public class Record {
     public Integer getExpenses() {
         return expenses;
     }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setExpenses(Integer expenses) {
+        this.expenses = expenses;
+    }
+
 
     @Override
     public String toString() {
