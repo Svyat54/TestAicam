@@ -1,4 +1,4 @@
-package org.example.entities.responseEntities;
+package org.example.entities.responseEntities.stat;
 
 import java.util.LinkedList;
 

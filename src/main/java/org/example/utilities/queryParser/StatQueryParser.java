@@ -1,10 +1,11 @@
-package org.example.utilities;
+package org.example.utilities.queryParser;
 
 import org.example.DB.DbShopAgent;
-import org.example.entities.responseEntities.Record;
-import org.example.entities.responseEntities.ResponseCustomer;
-import org.example.entities.responseEntities.ResponseJsonObject;
-import org.example.entities.responseEntities.ResponsePurchase;
+import org.example.entities.responseEntities.stat.Record;
+import org.example.entities.responseEntities.stat.ResponseCustomer;
+import org.example.entities.responseEntities.stat.ResponseJsonObject;
+import org.example.entities.responseEntities.stat.ResponsePurchase;
+import org.example.utilities.Writer;
 import org.json.JSONObject;
 
 import java.io.IOException;

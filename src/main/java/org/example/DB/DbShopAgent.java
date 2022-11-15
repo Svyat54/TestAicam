@@ -1,6 +1,6 @@
 package org.example.DB;
 import org.example.entities.requestEntities.Customer;
-import org.example.entities.responseEntities.Record;
+import org.example.entities.responseEntities.stat.Record;
 import org.json.JSONObject;
 import java.sql.*;
 import java.util.LinkedList;

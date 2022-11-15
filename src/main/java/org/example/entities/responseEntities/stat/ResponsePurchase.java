@@ -1,4 +1,4 @@
-package org.example.entities.responseEntities;
+package org.example.entities.responseEntities.stat;
 
 public class ResponsePurchase {
     private String name;
