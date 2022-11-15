@@ -1,4 +1,4 @@
-package org.example.exeption;
+package org.example.utilities.exeption;
 
 import org.example.utilities.Writer;
 

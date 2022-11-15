@@ -26,19 +26,6 @@ public class Record {
         return expenses;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setExpenses(Integer expenses) {
-        this.expenses = expenses;
-    }
-
-
     @Override
     public String toString() {
         return "{" +

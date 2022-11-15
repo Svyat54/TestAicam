@@ -11,10 +11,6 @@ public class ResponseCustomer {
         return name;
     }
 
-    public LinkedList<ResponsePurchase> getPurchases() {
-        return purchases;
-    }
-
     public Integer getTotalExpenses() {
         return totalExpenses;
     }

@@ -1,6 +1,6 @@
 package org.example.utilities;
 
-import org.example.exeption.NotParsedJson;
+import org.example.utilities.exeption.NotParsedJson;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
-
 public class Reader {
 
     public static LinkedList<JSONObject> getJsonFromFile(String path) throws IOException {

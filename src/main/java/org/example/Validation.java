@@ -1,8 +1,8 @@
 package org.example;
 
-import org.example.exeption.InputParameterDate;
-import org.example.exeption.InputParameterName;
-import org.example.exeption.InputParameterValue;
+import org.example.utilities.exeption.InputParameterDate;
+import org.example.utilities.exeption.InputParameterName;
+import org.example.utilities.exeption.InputParameterValue;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.time.LocalDate;

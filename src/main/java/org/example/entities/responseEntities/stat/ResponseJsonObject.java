@@ -17,43 +17,11 @@ public class ResponseJsonObject {
         this.type = type;
     }
 
-    public Integer getTotalDays() {
-        return totalDays;
-    }
-
-    public void setTotalDays(Integer totalDays) {
-        this.totalDays = totalDays;
-    }
-
-    public LinkedList<ResponseCustomer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(LinkedList<ResponseCustomer> customers) {
-        this.customers = customers;
-    }
-
-    public Integer getTotalExpenses() {
-        return totalExpenses;
-    }
-
-    public void setTotalExpenses(Integer totalExpenses) {
-        this.totalExpenses = totalExpenses;
-    }
-
-    public Double getAvgExpenses() {
-        return avgExpenses;
-    }
-
     public ResponseJsonObject(String type, Integer totalDays, LinkedList<ResponseCustomer> customers, Integer totalExpenses, Double avgExpenses) {
         this.type = type;
         this.totalDays = totalDays;
         this.customers = customers;
         this.totalExpenses = totalExpenses;
-        this.avgExpenses = avgExpenses;
-    }
-
-    public void setAvgExpenses(Double avgExpenses) {
         this.avgExpenses = avgExpenses;
     }
 

@@ -1,8 +1,6 @@
 package org.example.utilities.queryParser;
 
 import org.example.DB.DbShopAgent;
-import org.example.entities.requestEntities.Customer;
-import org.example.entities.responseEntities.serch.CriteriaResult;
 import org.example.entities.responseEntities.stat.Record;
 import org.example.entities.responseEntities.stat.ResponseCustomer;
 import org.example.entities.responseEntities.stat.ResponseJsonObject;

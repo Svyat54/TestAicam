@@ -1,7 +1,5 @@
 package org.example.utilities;
 
-import org.example.entities.responseEntities.stat.ResponseJsonObject;
-
 import java.io.FileWriter;
 import java.io.IOException;
 

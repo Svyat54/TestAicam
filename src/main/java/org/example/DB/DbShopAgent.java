@@ -127,5 +127,4 @@ public class DbShopAgent {
                 "JOIN products p on sub.productid = p.id JOIN customers c on sub.customerid = c.id\n" +
                 "group by p.name, p.priсe, sub.customerid, c.name, c.lastname, sub.productid ORDER BY expenses DESC;";
     }
-
 }

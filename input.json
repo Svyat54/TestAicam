@@ -1,9 +1,4 @@
 {
-  "criterias": [
-    {"lastName": "Никитин"},
-    {"lastName": "Захарова"},
-    {"productName": "сахар", "minTimes": 2},
-    {"minExpenses": 5000, "maxExpenses": 7000},
-    {"badCustomers": 3}
-  ]
+  "startDate": "2022-10-01",
+  "endDate": "2022-10-10"
 }

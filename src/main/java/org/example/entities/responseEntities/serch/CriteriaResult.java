@@ -2,8 +2,6 @@ package org.example.entities.responseEntities.serch;
 
 import org.example.entities.requestEntities.Customer;
 import org.json.JSONObject;
-
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class CriteriaResult {
