@@ -1,13 +1,14 @@
 package org.example.utilities.queryParser;
 
 import org.example.DB.DbShopAgent;
+import org.example.entities.requestEntities.Customer;
+import org.example.entities.responseEntities.serch.CriteriaResult;
 import org.example.entities.responseEntities.stat.Record;
 import org.example.entities.responseEntities.stat.ResponseCustomer;
 import org.example.entities.responseEntities.stat.ResponseJsonObject;
 import org.example.entities.responseEntities.stat.ResponsePurchase;
 import org.example.utilities.Writer;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -54,25 +55,22 @@ public class StatQueryParser {
         return new ResponseCustomer(fullName, purchases, totalExpenses);
     }
 
-    public static void response(LinkedList<JSONObject> list) throws IOException {
-        String url = "jdbc:postgresql://localhost:5432/DatabasesTestTask";
-        String name = "root";
-        String password = "rootroot1";
-        DbShopAgent agent = new DbShopAgent(url, name, password);
-
-        ResponseJsonObject jsonObject = getFinalObject(agent, list);
-        Writer.writeJsonToFile(jsonObject);
+    private static LinkedList<ResponseCustomer> getFormattedCustomerList(LinkedList<JSONObject> list){
+        LinkedList<Record> allRecordsByPeriod = new DbShopAgent().getRecordsList(list.get(0));
+        LinkedList<LinkedList<Record>> recordsList = StatQueryParser.getListOfRecordsByFullName(allRecordsByPeriod);
+        return StatQueryParser.getOutputList(recordsList);
     }
 
-    private static ResponseJsonObject getFinalObject(DbShopAgent agent, LinkedList<JSONObject> list) {
-        LinkedList<Record> allRecordsByPeriod = agent.getRecordsList(list.get(0));
-        LinkedList<LinkedList<Record>> recordsList = StatQueryParser.getListOfRecordsByFullName(allRecordsByPeriod);
-        String type = "stat";
+    public static void response(LinkedList<JSONObject> list) throws IOException {
+        Writer.writeJsonToFile(getFinalObject(list));
+    }
+
+    private static ResponseJsonObject getFinalObject(LinkedList<JSONObject> list) {
         int totalDays = getTotalDaysFromJson(list.get(0));
-        LinkedList<ResponseCustomer> customers = StatQueryParser.getOutputList(recordsList);
+        LinkedList<ResponseCustomer> customers = getFormattedCustomerList(list);
         int totalExpenses = getTotalExpensesByAllCustomers(customers);
         double avgExpenses = (double) totalExpenses / customers.size();
-        return new ResponseJsonObject(type, totalDays, customers, totalExpenses, avgExpenses);
+        return new ResponseJsonObject("stat", totalDays, customers, totalExpenses, avgExpenses);
     }
 
     public static int getTotalExpensesByAllCustomers(LinkedList<ResponseCustomer> customers){

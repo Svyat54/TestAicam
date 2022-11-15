@@ -13,10 +13,10 @@ public class DbShopAgent {
     private String password;
     private Connection connection;
 
-    public DbShopAgent(String url, String name, String password) {
-        this.url = url;
-        this.name = name;
-        this.password = password;
+    public DbShopAgent() {
+        this.url = "jdbc:postgresql://localhost:5432/DatabasesTestTask";
+        this.name = "root";
+        this.password = "rootroot1";
         try{
             this.connection = DriverManager.getConnection(url, name, password);
         } catch (SQLException e){

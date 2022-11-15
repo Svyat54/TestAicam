@@ -6,24 +6,24 @@ import org.example.entities.responseEntities.serch.CriteriaResponseJsonObject;
 import org.example.entities.responseEntities.serch.CriteriaResult;
 import org.example.utilities.Writer;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.LinkedList;
 
 public class SearchQueryParser {
-    public static void response(LinkedList<JSONObject> list) throws IOException {
-        String url = "jdbc:postgresql://localhost:5432/DatabasesTestTask";
-        String name = "root";
-        String password = "rootroot1";
-        DbShopAgent agent = new DbShopAgent(url, name, password);
+    private static CriteriaResult getCriteriaResult(JSONObject object){
+        LinkedList<Customer> resultsCustomers = new DbShopAgent().getCustomersList(object);
+        return new CriteriaResult(object, resultsCustomers);
+    }
 
-        String type = "search";
+    public static void response(LinkedList<JSONObject> list) throws IOException {
+        Writer.writeJsonToFile(getFinalObject(list));
+    }
+
+    private static CriteriaResponseJsonObject getFinalObject(LinkedList<JSONObject> list){
         LinkedList<CriteriaResult> results = new LinkedList<>();
         for(JSONObject object : list){
-            LinkedList<Customer> resultsCustomers = agent.getCustomersList(object);
-            results.add(new CriteriaResult(object, resultsCustomers));
+           results.add(getCriteriaResult(object));
         }
-        CriteriaResponseJsonObject object = new CriteriaResponseJsonObject(type, results);
-        Writer.writeJsonToFile(object);
+        return new CriteriaResponseJsonObject("search", results);
     }
 }

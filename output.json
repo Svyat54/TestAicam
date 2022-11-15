@@ -1,44 +1,4 @@
 {
-	"type":"search", 
-	"results":[		
-		{
-			"criteria":{"lastName":"Никитин"}, 
-			"results":[
-					{ "lastName": "Никитин", "firstName": "Дмитрий"},
-					{ "lastName": "Никитин", "firstName": "Сергей"},
-					{ "lastName": "Никитин", "firstName": "Василий"}
-			]
-		},		
-		{
-			"criteria":{"lastName":"Захарова"}, 
-			"results":[
-					{ "lastName": "Захарова", "firstName": "Наталия"},
-					{ "lastName": "Захарова", "firstName": "Любовь"}
-			]
-		},		
-		{
-			"criteria":{"minTimes":2,"productName":"сахар"}, 
-			"results":[
-					{ "lastName": "Захаров", "firstName": "Дмитрий"},
-					{ "lastName": "Соколова", "firstName": "Светлана"},
-					{ "lastName": "Васильева", "firstName": "Наталья"},
-					{ "lastName": "Орлова", "firstName": "Елизавета"}
-			]
-		},		
-		{
-			"criteria":{"minExpenses":5000,"maxExpenses":7000}, 
-			"results":[
-					{ "lastName": "Васильева", "firstName": "Наталья"},
-					{ "lastName": "Волков", "firstName": "Петр"}
-			]
-		},		
-		{
-			"criteria":{"badCustomers":3}, 
-			"results":[
-					{ "lastName": "Захарова", "firstName": "Наталия"},
-					{ "lastName": "Лебедева", "firstName": "Инна"},
-					{ "lastName": "Васильев", "firstName": "Сергей"}
-			]
-		}
-	]
+    "type": "error",
+    "message": "Некорректное значение параметра запроса"
 }

@@ -13,4 +13,10 @@ public class Writer {
         fw.write(json.toString());
         fw.close();
     }
+
+    public static void writeTest(String str) throws IOException {
+        FileWriter fw = new FileWriter(output);
+        fw.write(str);
+        fw.close();
+    }
 }

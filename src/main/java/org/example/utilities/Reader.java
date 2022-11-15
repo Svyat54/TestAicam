@@ -1,9 +1,7 @@
 package org.example.utilities;
 
+import org.example.exeption.NotParsedJson;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -13,27 +11,21 @@ import java.util.Map;
 import java.util.Set;
 
 public class Reader {
-    public static StringBuilder readerInput(String path) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader br = new BufferedReader(new FileReader(path));
-        String str;
-        while ((str = br.readLine()) != null){
-            sb.append(str).append("\n");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        return sb;
-    }
 
     public static LinkedList<JSONObject> getJsonFromFile(String path) throws IOException {
-        String jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
-        JSONObject obj = new JSONObject(jsonString);
-        Map<String, Object> map = obj.toMap();
-        Set<String> set = map.keySet();
-        if(set.size() == 1){
-            return getCriteriasList(obj);
-        }else if(set.size() == 2) {
-            return getRangeList(obj);
-        }else return null;
+        try {
+            String jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+            JSONObject obj = new JSONObject(jsonString);
+            Map<String, Object> map = obj.toMap();
+            Set<String> set = map.keySet();
+            if(set.size() == 1){
+                return getCriteriasList(obj);
+            }else if(set.size() == 2) {
+                return getRangeList(obj);
+            }else return null;
+        } catch(RuntimeException e){
+            throw new NotParsedJson("Error lock file output");
+        }
     }
 
     private static LinkedList<JSONObject> getCriteriasList (JSONObject object){
@@ -53,7 +45,4 @@ public class Reader {
         statList.add(object);
         return statList;
     }
-
-
-
 }
